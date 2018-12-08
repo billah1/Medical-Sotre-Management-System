@@ -1,0 +1,1648 @@
+#include<stdio.h> //For scanf,printf etc
+#include<stdlib.h> // File Management
+#include<conio.h> // Font color
+#include<string.h> // String strcmp,strcpy
+#include<windows.h> //Cursor Location
+
+int passtime=0; //count the wrong password
+struct info
+{
+    char category[15];
+    int buyrate;
+    int sellrate;
+    char name[20];
+    char date[20];
+    char address[20];
+    char phonenumber[20];
+    int quantity;
+}store;
+
+COORD coord = {0, 0}; // Cursor
+
+void gotoxy(int x, int y) //Cursor Location Function
+{
+        coord.X = x; coord.Y = y;
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+void password(int h)
+{
+ char passcode[10]="masum";
+
+   system("cls");
+   if(passtime==3)
+   {
+       system("cls");
+       gotoxy(20,8);
+       printf("The program will exit");
+       gotoxy(17,10);
+       printf("Please contact the Administrator");
+       getche();
+       system("cls");
+       exit(0);
+   }
+   if(h == 0)
+   {
+     gotoxy(20,16);
+	 printf("Incorrect Password. Input the password again\a");
+	 passtime++;
+	 gotoxy(20,13);
+	 printf("You have remaining %d times",3-passtime);
+   }
+   char ch,pass[10];
+   int i=0,j;
+   gotoxy(20,2);
+   printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 PASSWORD PROTECTED \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+   gotoxy(25,7);
+   printf("Enter Password:");
+   while(ch!=13)
+   {
+	ch=getch();
+
+	if(ch!=13 && ch!=8){
+	putch('*');
+	pass[i] = ch;
+	i++;
+	}
+   }
+   pass[i] = '\0';
+   if(strcmp(pass,passcode)==0)
+   {
+
+	gotoxy(22,9);
+	printf("Password match");
+	gotoxy(22,10);
+	printf("LOADING");
+	int i;
+	for(i=0;i<6;i++)
+    {
+        Sleep(250);
+        printf(">");
+    }
+    mainmenu();
+   }
+   else
+   {
+	 password(0);
+   }
+}
+void addproduct()
+{
+    system("cls");
+    int a;   char ch[2],cm[2]="y";
+    FILE *fp;
+    gotoxy(20,2);
+    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 ADD PRODUCT \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+    gotoxy(28,4);
+	printf("[1] NAPA");
+	gotoxy(28,6);
+	printf("[2] NEBANOL");
+	gotoxy(28,8);
+	printf("[3] SECLO");
+	gotoxy(28,10);
+	printf("[4] hamdard");
+	gotoxy(28,12);
+	printf("[5] Back to mainmenu");
+    gotoxy(20,14);
+    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+	gotoxy(25,16);
+	printf("Enter your choice: ");
+	scanf("%d",&a);
+	while(a<1||a>5)
+    {
+        gotoxy(25,16);
+        printf("Enter correct keyword: ");
+        scanf("%d",&a);
+    }
+
+	switch (a)
+	{
+        case 1:     system("cls");
+                    gotoxy(20,2);
+                    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 NAPA\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+                    gotoxy(25,4);
+                    printf("Enter the medicine name1: ");
+                    scanf("%s",store.name);
+                    gotoxy(25,6);
+                    printf("Enter the medicine Buy Rate: ");
+                    scanf("%d",&store.buyrate);
+                    gotoxy(25,10);
+                    printf("Enter the medicine Sell Rate: ");
+                    scanf("%d",&store.sellrate);
+                    gotoxy(25,12);
+                    printf("Enter the medicine Quantity: ");
+                    scanf("%d",&store.quantity);
+
+                    fp=fopen("napa.txt","a");
+                    fprintf(fp,"%s %d %d %d\n",store.name,store.buyrate,store.sellrate,store.quantity);
+                    fclose(fp);
+                    system("cls");
+                    gotoxy(26,8);
+                    printf("You Have Successfully add product");
+                    gotoxy(23,10);
+                    printf("Are you want to add another[y/n]: ");
+                    scanf("%s",ch);
+
+                    if(strcmp(ch,cm)==0)
+                    {
+                        addproduct();
+                    }
+                    else
+                      mainmenu();
+
+            break;
+        case 2:system("cls");
+                    gotoxy(20,2);
+                    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 NEBANOL \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+                    gotoxy(25,4);
+                    printf("Enter the medicine namel: ");
+                    scanf("%s",store.name);
+                    gotoxy(25,6);
+                    printf("Enter the medicine Buy Rate: ");
+                    scanf("%d",&store.buyrate);
+                    gotoxy(25,8);
+                    printf("Enter the medicine Sell Rate: ");
+                    scanf("%d",&store.sellrate);
+                    gotoxy(25,10);
+                    printf("Enter the medicine Quantity: ");
+                    scanf("%d",&store.quantity);
+
+                    fp=fopen("nebanol.txt","a");
+                    fprintf(fp,"%s %d %d %d\n",store.name,store.buyrate,store.sellrate,store.quantity);
+                    fclose(fp);
+                    system("cls");
+                    gotoxy(26,8);
+                    printf("You Have Successfully add product");
+                    gotoxy(23,10);
+                    printf("Are you want to add another[y/n]: ");
+                    scanf("%s",ch);
+
+                    if(strcmp(ch,cm)==0)
+                    {
+                        addproduct();
+                    }
+                    else
+                       mainmenu();
+            break;
+        case 3:system("cls");
+                    gotoxy(20,2);
+                    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 SECLO \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+                    gotoxy(25,4);
+                    printf("Enter the medicine name1: ");
+                    scanf("%s",store.name);
+                    gotoxy(25,6);
+                    printf("Enter the medicine Buy Rate: ");
+                    scanf("%d",&store.buyrate);
+                    gotoxy(25,8);
+                    printf("Enter the medicine Sell Rate: ");
+                    scanf("%d",&store.sellrate);
+                    gotoxy(25,10);
+                    printf("Enter the medicine Quantity: ");
+                    scanf("%d",&store.quantity);
+
+                    fp=fopen("seclo.txt","a");
+                    fprintf(fp,"%s %d %d %d\n",store.name,store.buyrate,store.sellrate,store.quantity);
+                    fclose(fp);
+                    system("cls");
+                    gotoxy(26,8);
+                    printf("You Have Successfully add product");
+                    gotoxy(23,10);
+                    printf("Are you want to add another[y/n]: ");
+                    scanf("%s",ch);
+
+                    if(strcmp(ch,cm)==0)
+                    {
+                        addproduct();
+                    }
+                    else
+                      printf("mainmenu()");
+            break;
+        case 4:system("cls");
+                    gotoxy(20,2);
+                    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 HAMDARD \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+                    gotoxy(25,4);
+                    printf("Enter the medicine name: ");
+                    scanf("%s",store.name);
+                    gotoxy(25,6);
+                    printf("Enter the medicine Buy Rate: ");
+                    scanf("%d",&store.buyrate);
+                    gotoxy(25,8);
+                    printf("Enter the medicine Sell Rate: ");
+                    scanf("%d",&store.sellrate);
+                    gotoxy(25,12);
+                    printf("Enter the medicine Quantity: ");
+                    scanf("%d",&store.quantity);
+
+                    fp=fopen("hamdard.txt","a");
+                    fprintf(fp,"%s %d %d %d\n",store.name,store.buyrate,store.sellrate,store.quantity);
+                    fclose(fp);
+                    system("cls");
+                    gotoxy(26,8);
+                    printf("You Have Successfully add product");
+                    gotoxy(23,10);
+                    printf("Are you want to add another[y/n]: ");
+                    scanf("%s",ch);
+
+                    if(strcmp(ch,cm)==0)
+                    {
+                        addproduct();
+                    }
+                    else
+                    mainmenu();
+            break;
+        case 5:
+            mainmenu();
+            break;
+	}
+
+}
+
+void viewproduct()
+{
+    system("cls");
+    int a;   char ch[2],cm[2]="y";
+    FILE *fp;
+    gotoxy(20,2);
+    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 VIEW PRODUCT LIST \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+    gotoxy(28,4);
+	printf("[1] NAPA");
+	gotoxy(28,6);
+	printf("[2] NEBANOL");
+	gotoxy(28,8);
+	printf("[3] SECLO");
+	gotoxy(28,10);
+	printf("[4] HAMDARD");
+	gotoxy(28,12);
+	printf("[5] Back to mainmenu");
+    gotoxy(20,14);
+    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+	gotoxy(25,16);
+	printf("Enter your choice: ");
+	scanf("%d",&a);
+	while(a<1||a>5)
+    {
+        gotoxy(25,16);
+        printf("Enter correct keyword: ");
+        scanf("%d",&a);
+    }
+    switch (a)
+    {
+            case 1:
+                    system("cls");
+                    fp=fopen("napa.txt","r");
+                    gotoxy(20,2);
+                    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 NAPA \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+                    gotoxy(6,4);
+                    printf("medicine Name Buy Rate  Sell Rate  Quantity");
+                    gotoxy(6,5);
+                    printf("-----------------------------------------------------------------");
+                    printf("\n");
+                    while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                    {
+                        printf("\tNapa\t%s\t%d\t %d\t\t%d\n",store.name,store.buyrate,store.sellrate,store.quantity);
+                    }
+                    fclose(fp);
+                    printf("\n\n\t\t\tAre you want to view another[y/n]: ");
+                    scanf("%s",ch);
+
+                    if(strcmp(ch,cm)==0)
+                    {
+                        viewproduct();
+                    }
+                    else
+                     mainmenu();
+                break;
+            case 2:system("cls");
+                    fp=fopen("nebanol.txt","r");
+                    gotoxy(20,2);
+                    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 NEBANOL \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+                    gotoxy(6,4);
+                    printf("medicine Name  Buy Rate  Sell Rate  Quantity");
+                    gotoxy(6,5);
+                    printf("-----------------------------------------------------------------");
+                    printf("\n");
+                    while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                    {
+                        printf("\tnebanol\t\t%s\t%d\t %d\t\t%d\n",store.name,store.buyrate,store.sellrate,store.quantity);
+                    }
+                    fclose(fp);
+                    printf("\n\n\t\t\tAre you want to view another[y/n]: ");
+                    scanf("%s",ch);
+
+                    if(strcmp(ch,cm)==0)
+                    {
+                        viewproduct();
+                    }
+                    else
+                       mainmenu();
+                break;
+            case 3:system("cls");
+                    fp=fopen("seclo.txt","r");
+                    gotoxy(20,2);
+                    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 SECLO\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+                    gotoxy(6,4);
+                    printf("medicine Name  Buy Rate  Sell Rate  Quantity");
+                    gotoxy(6,5);
+                    printf("-----------------------------------------------------------------");
+                    printf("\n");
+                    while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                    {
+                        printf("\tseclo\t\t%s\t%d\t %d\t\t%d\n",store.name,store.buyrate,store.sellrate,store.quantity);
+                    }
+                    fclose(fp);
+                    printf("\n\n\t\t\tAre you want to view another[y/n]: ");
+                    scanf("%s",ch);
+
+                    if(strcmp(ch,cm)==0)
+                    {
+                        viewproduct();
+                    }
+                    else
+                        mainmenu();
+                break;
+            case 4:system("cls");
+                    fp=fopen("hamdard.txt","r");
+                    gotoxy(20,2);
+                    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 HAMDARD \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+                    gotoxy(6,4);
+                    printf("medicine Name  Buy Rate  Sell Rate  Quantity");
+                    gotoxy(6,5);
+                    printf("-----------------------------------------------------------------");
+                    printf("\n");
+                    while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                    {
+                        printf("\thamdard\t%s\t%d\t %d\t\t%d\n",store.name,store.buyrate,store.sellrate,store.quantity);
+                    }
+                    fclose(fp);
+                    printf("\n\n\t\t\tAre you want to view another[y/n]: ");
+                    scanf("%s",ch);
+
+                    if(strcmp(ch,cm)==0)
+                    {
+                        viewproduct();
+                    }
+                    else
+                        mainmenu();
+                break;
+            case 5:
+                mainmenu();
+                break;
+    }
+
+}
+
+void updateproduct()
+{
+    system("cls");
+    int a,test=0,test1=0;   char ch[2],mod[10],cm[2]="y";
+    FILE *fp,*ft;
+    gotoxy(20,2);
+    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 UPDATE PRODUCT \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+    gotoxy(28,4);
+	printf("[1] NAPA");
+	gotoxy(28,6);
+	printf("[2] NEBANOL");
+	gotoxy(28,8);
+	printf("[3] SECLO");
+	gotoxy(28,10);
+	printf("[4] HAMDARD");
+	gotoxy(28,12);
+	printf("[5] Back to mainmenu");
+    gotoxy(20,14);
+    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+	gotoxy(25,16);
+	printf("Enter your choice: ");
+	scanf("%d",&a);
+	while(a<1||a>5)
+    {
+        gotoxy(25,16);
+        printf("Enter correct keyword: ");
+        scanf("%d",&a);
+    }
+    switch (a)
+    {
+            case 1:
+                    system("cls");
+                    fp=fopen("napa.txt","r");
+                    gotoxy(20,2);
+                    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 NAPA \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+                    gotoxy(22,4);
+                    printf("Enter the medicine name: ");
+                    scanf("%s",mod);
+                    while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                    {
+                        if(strcmp(store.name,mod)==0){
+                            test=1;
+                            }
+                    }
+                    fclose(fp);
+                    if(test==1)
+                    {
+                        gotoxy(22,6);
+                        printf("The %s product is available.",mod);
+                        gotoxy(22,8);
+                        printf("Are you want to sure to update [y/n]:");
+                        scanf("%s",ch);
+                        if(strcmp(cm,ch)==0)
+                        {
+                            fp=fopen("napa.txt","r");
+                            ft=fopen("temp.txt","a");
+                            while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                            {
+                                if(strcmp(store.name,mod)!=0)
+                                {
+                                    fprintf(ft,"%s %d %d %d\n",store.name,store.buyrate,store.sellrate,store.quantity);
+                                }
+                            }
+                            gotoxy(22,10);
+                            printf("The medicine name is %s",mod);
+                            gotoxy(22,12);
+                            printf("Enter the medicine Buy rate: ");
+                            scanf("%d",&store.buyrate);
+                            gotoxy(22,16);
+                            printf("Enter the medicine Sell rate: ");
+                            scanf("%d",&store.sellrate);
+                            gotoxy(22,18);
+                            printf("Enter the medicine Quantity: ");
+                            scanf("%d",&store.quantity);
+                            fprintf(ft,"%s %d %d %d\n",mod,store.buyrate,store.sellrate,store.quantity);
+                            fclose(fp);
+                            fclose(ft);
+                            remove("napa.txt");
+                            rename("temp.txt","napa.txt");
+                            test1=1;
+
+                        }
+                        else
+                         mainmenu();
+                    }
+                    else
+                    {
+                        gotoxy(8,6);
+                        printf("The %s medicine is not available.",mod);
+                        gotoxy(8,8);
+                        printf("Press any key to go Main Menu.......");
+                        getch();
+                       mainmenu();
+
+                    }
+                    if(test1==1)
+                    {
+                        system("cls");
+                        gotoxy(20,6);
+                        printf("You have successfully update this product");
+                        gotoxy(22,8);
+                        printf("Are you want to view another[y/n]: ");
+                        scanf("%s",ch);
+
+                        if(strcmp(ch,cm)==0)
+                        {
+                            viewproduct();
+                        }
+                        else
+                            mainmenu();
+
+                    }
+
+                break;
+            case 2:system("cls");
+                    fp=fopen("nebanol.txt","r");
+                    gotoxy(20,2);
+                    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 NEBANOL \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+                    gotoxy(22,4);
+                    printf("Enter the medicine name: ");
+                    scanf("%s",mod);
+                    while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                    {
+                        if(strcmp(store.name,mod)==0){
+                            test=1;
+                            }
+                    }
+                    fclose(fp);
+                    if(test==1)
+                    {
+                        gotoxy(22,6);
+                        printf("The %s medicine is available.",mod);
+                        gotoxy(22,8);
+                        printf("Are you want to sure to update [y/n]:");
+                        scanf("%s",ch);
+                        if(strcmp(cm,ch)==0)
+                        {
+                            fp=fopen("nebanol.txtt","r");
+                            ft=fopen("temp.txt","a");
+                            while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                            {
+                                if(strcmp(store.name,mod)!=0)
+                                {
+                                    fprintf(ft,"%s %d %d %d\n",store.name,store.buyrate,store.sellrate,store.quantity);
+                                }
+                            }
+                            gotoxy(22,10);
+                            printf("The medicine name is %s",mod);
+                            gotoxy(22,12);
+                            printf("Enter the medicine Buy rate: ");
+                            scanf("%d",&store.buyrate);
+                            gotoxy(22,14);
+                            printf("Enter the medicine Sell rate: ");
+                            scanf("%d",&store.sellrate);
+                            gotoxy(22,16);
+                            printf("Enter the medicine Quantity: ");
+                            scanf("%d",&store.quantity);
+                            fprintf(ft,"%s %d %d %d\n",mod,store.buyrate,store.sellrate,store.quantity);
+                            fclose(fp);
+                            fclose(ft);
+                            remove("nebanol.txt");
+                            rename("temp.txt","nebanol.txt");
+                            test1=1;
+
+                        }
+                        else
+                         mainmenu();
+                    }
+                    else
+                    {
+                        gotoxy(8,6);
+                        printf("The %s medicine is not available.",mod);
+                        gotoxy(8,8);
+                        printf("Press any key to go Main Menu.......");
+                        getch();
+                        mainmenu();
+
+                    }
+                    if(test1==1)
+                    {
+                        system("cls");
+                        gotoxy(20,6);
+                        printf("You have successfully update this product");
+                        gotoxy(22,8);
+                        printf("Are you want to view another[y/n]: ");
+                        scanf("%s",ch);
+
+                        if(strcmp(ch,cm)==0)
+                        {
+                            viewproduct();
+                        }
+                        else
+                           mainmenu();
+
+                    }
+
+                break;
+            case 3:system("cls");
+                    fp=fopen("seclo.txt","r");
+                    gotoxy(20,2);
+                    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 SECLO \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+                    gotoxy(22,4);
+                    printf("Enter the medicine name: ");
+                    scanf("%s",mod);
+                    while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                    {
+                        if(strcmp(store.name,mod)==0){
+                            test=1;
+                            }
+                    }
+                    fclose(fp);
+                    if(test==1)
+                    {
+                        gotoxy(22,6);
+                        printf("The %s medicine is available.",mod);
+                        gotoxy(22,8);
+                        printf("Are you want to sure to update [y/n]:");
+                        scanf("%s",ch);
+                        if(strcmp(cm,ch)==0)
+                        {
+                            fp=fopen("seclo.txt","r");
+                            ft=fopen("temp.txt","a");
+                            while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                            {
+                                if(strcmp(store.name,mod)!=0)
+                                {
+                                    fprintf(ft,"%s %d %d %d\n",store.name,store.buyrate,store.sellrate,store.quantity);
+                                }
+                            }
+                            gotoxy(22,10);
+                            printf("The medicine name is %s",mod);
+                            gotoxy(22,12);
+                            printf("Enter the medicine  Buy rate: ");
+                            scanf("%d",&store.buyrate);
+                            gotoxy(22,14);
+                            printf("Enter the medicine Sell rate: ");
+                            scanf("%d",&store.sellrate);
+                            gotoxy(22,16);
+                            printf("Enter the medicine Quantity: ");
+                            scanf("%d",&store.quantity);
+                            fprintf(ft,"%s %d %d %d\n",mod,store.buyrate,store.sellrate,store.quantity);
+                            fclose(fp);
+                            fclose(ft);
+                            remove("seclo.txt");
+                            rename("temp.txt","seclo.txt");
+                            test1=1;
+
+                        }
+                        else
+                           mainmenu();
+                    }
+                    else
+                    {
+                        gotoxy(8,6);
+                        printf("The %s medicine is not available.",mod);
+                        gotoxy(8,8);
+                        printf("Press any key to go Main Menu.......");
+                        getch();
+                        mainmenu();
+
+                    }
+                    if(test1==1)
+                    {
+                        system("cls");
+                        gotoxy(20,6);
+                        printf("You have successfully update this medicine");
+                        gotoxy(22,8);
+                        printf("Are you want to view another[y/n]: ");
+                        scanf("%s",ch);
+
+                        if(strcmp(ch,cm)==0)
+                        {
+                            viewproduct();
+                        }
+                        else
+                            mainmenu();
+
+                    }
+
+                break;
+            case 4:system("cls");
+                    fp=fopen("hamdard.txt","r");
+                    gotoxy(20,2);
+                    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 HAMDARD \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+                    gotoxy(22,4);
+                    printf("Enter the medicine name: ");
+                    scanf("%s",mod);
+                    while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                    {
+                        if(strcmp(store.name,mod)==0){
+                            test=1;
+                            }
+                    }
+                    fclose(fp);
+                    if(test==1)
+                    {
+                        gotoxy(22,6);
+                        printf("The %s medicine  is available.",mod);
+                        gotoxy(22,8);
+                        printf("Are you want to sure to update [y/n]:");
+                        scanf("%s",ch);
+                        if(strcmp(cm,ch)==0)
+                        {
+                            fp=fopen("hamdard.txt","r");
+                            ft=fopen("temp.txt","a");
+                            while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                            {
+                                if(strcmp(store.name,mod)!=0)
+                                {
+                                    fprintf(ft,"%s %d %d %d\n",store.name,store.buyrate,store.sellrate,store.quantity);
+                                }
+                            }
+                            gotoxy(22,10);
+                            printf("The medicine is %s",mod);
+                            gotoxy(22,12);
+                            printf("Enter the medicine Buy rate: ");
+                            scanf("%d",&store.buyrate);
+                            gotoxy(22,16);
+                            printf("Enter the medicine Sell rate: ");
+                            scanf("%d",&store.sellrate);
+                            gotoxy(22,18);
+                            printf("Enter the medicine Quantity: ");
+                            scanf("%d",&store.quantity);
+                            fprintf(ft,"%s %d %d %d\n",mod,store.buyrate,store.sellrate,store.quantity);
+                            fclose(fp);
+                            fclose(ft);
+                            remove("hamdard.txt");
+                            rename("temp.txt","hamdard.txt");
+                            test1=1;
+
+                        }
+                        else
+                            mainmenu();
+                    }
+                    else
+                    {
+                        gotoxy(8,6);
+                        printf("The %s medicine is not available.",mod);
+                        gotoxy(8,8);
+                        printf("Press any key to go Main Menu.......");
+                        getch();
+                        mainmenu();
+
+                    }
+                    if(test1==1)
+                    {
+                        system("cls");
+                        gotoxy(20,6);
+                        printf("You have successfully update this medicine");
+                        gotoxy(22,8);
+                        printf("Are you want to view another[y/n]: ");
+                        scanf("%s",ch);
+
+                        if(strcmp(ch,cm)==0)
+                        {
+                            viewproduct();
+                        }
+                        else
+                        mainmenu();
+
+                    }
+
+                break;
+            case 5:
+                mainmenu();
+                break;
+    }
+}
+
+void sellproduct()
+{
+    system("cls");
+    int a,test=0,test1=0,quantity,total;   char ch[2],mod[10],color[10],cm[2]="y",cn[2]="p";
+    FILE *fphone,*ft,*fp;
+    gotoxy(20,2);
+    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 SELL PRODUCT \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+    gotoxy(28,4);
+	printf("[1] NAPA");
+	gotoxy(28,6);
+	printf("[2] NEBANOL");
+	gotoxy(28,8);
+	printf("[3] SECLO");
+	gotoxy(28,10);
+	printf("[4] HAMDARD");
+	gotoxy(28,12);
+	printf("[5] Back to mainmenu");
+    gotoxy(20,14);
+    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+	gotoxy(25,16);
+	printf("Enter your choice: ");
+	scanf("%d",&a);
+	while(a<1||a>5)
+    {
+        gotoxy(25,16);
+        printf("Enter correct keyword: ");
+        scanf("%d",&a);
+    }
+    switch (a)
+    {
+            case 1:
+                    system("cls");
+                    gotoxy(20,2);
+                    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 NAPA \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+                    gotoxy(24,4);
+                    printf("Enter the medicine name: ");
+                    scanf("%s",mod);
+                    fp=fopen("napa.txt","r");
+                    while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                    {
+                        if(strcmp(store.name,mod)==0)
+                        {
+                            if(store.quantity==0)
+                            {
+                                system("cls");
+                                gotoxy(20,10);
+                                printf("Sorry this medicine is not available");
+                                getch();
+                                mainmenu();
+                            }
+                            test=1;
+                            gotoxy(21,6);
+                            printf("The medicine is available Quantity is: ",store.quantity);
+                        }
+                    }
+                    if(test==1)
+                    {
+                        gotoxy(24,8);
+                        printf("Are you sure to sell this medicine[y/n]: ");
+                        scanf("%s",ch);
+                        if(strcmp(cm,ch)==0)
+                        {
+                            gotoxy(24,10);
+                            printf("How many medicine you need: ");
+                            scanf("%d",&quantity);
+                            while(store.quantity<=quantity)
+                            {
+                                gotoxy(24,10);
+                                printf("Please Enter the valid quantity: ");
+                                scanf("%d",&quantity);
+                            }
+                            gotoxy(24,12);
+                            printf("Enter the Sell date [dd-mm-yyyy]: ");
+                            scanf("%s",store.date);
+                            gotoxy(24,14);
+                            printf("Enter the customer name: ");
+                            scanf("%s",store.name);
+                            gotoxy(24,16);
+                            printf("Enter the customer Address: ");
+                            scanf("%s",store.address);
+                            gotoxy(24,18);
+                            printf("Enter the customer Contact No.: ");
+                            scanf("%s",store.phonenumber);
+                            total=store.sellrate*quantity;
+                            gotoxy(24,20);
+                            printf("Total Pay Bill : %d",total);
+                            fclose(fp);
+
+                            gotoxy(24,22);
+                            printf("If paid then press p else press n");
+                            scanf("%s",ch);
+                            if(strcmp(ch,cn)==0)
+                            {
+                                fp=fopen("tradelist.txt","a");
+                                fprintf(fp,"%s %s %s %s Napa %s %d %d\n",store.date,store.name,store.address,store.phonenumber,mod,quantity,total);
+                                fclose(fp);
+                                ft=fopen("temp.txt","a");
+                                fp=fopen("nokia.txt","r");
+                                while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                                {
+                                    if(strcmp(store.name,mod)==0)
+                                    {
+                                        fprintf(ft,"%s %d %d %d\n",store.name,store.buyrate,store.sellrate,(store.quantity-quantity));
+                                    }
+                                    else
+                                    {
+                                        fprintf(ft,"%s %d %d %d\n",store.name,store.buyrate,store.sellrate,store.quantity);
+                                    }
+                                }
+                                fclose(fp);
+                                fclose(ft);
+                                remove("napa.txt");
+                                rename("temp.txt","napa.txt");
+                                system("cls");
+                                gotoxy(20,10);
+                                printf("Thank You. See you Again");
+                                getch();
+                                mainmenu();
+
+
+                            }
+                            else
+                            mainmenu();
+
+                        }
+                        else
+                           mainmenu();
+                    }
+                    else
+                    {
+                                system("cls");
+                                gotoxy(20,10);
+                                printf("Sorry this medicine is not available");
+                                getch();
+                                sellproduct();
+                    }
+                break;
+            case 2:system("cls");
+                    gotoxy(20,2);
+                    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 NEBANOL \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+                    gotoxy(24,4);
+                    printf("Enter the medicine name: ");
+                    scanf("%s",mod);
+                    fp=fopen("nebanol.txt","r");
+                    while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                    {
+                        if(strcmp(store.name,mod)==0)
+                        {
+                            if(store.quantity==0)
+                            {
+                                system("cls");
+                                gotoxy(20,10);
+                                printf("Sorry this medicine is not available");
+                                getch();
+                               mainmenu();
+                            }
+                            test=1;
+                            gotoxy(21,6);
+                            printf("The medicine is available Quantity is:%d ",store.quantity);
+                        }
+                    }
+                    if(test==1)
+                    {
+                        gotoxy(24,8);
+                        printf("Are you sure to sell this medicine[y/n]: ");
+                        scanf("%s",ch);
+                        if(strcmp(cm,ch)==0)
+                        {
+                            gotoxy(24,10);
+                            printf("How many medicine you need: ");
+                            scanf("%d",&quantity);
+                            while(store.quantity<=quantity)
+                            {
+                                gotoxy(24,10);
+                                printf("Please Enter the valid quantity: ");
+                                scanf("%d",&quantity);
+                            }
+                            gotoxy(24,12);
+                            printf("Enter the Sell date [dd-mm-yyyy]: ");
+                            scanf("%s",store.date);
+                            gotoxy(24,14);
+                            printf("Enter the customer name: ");
+                            scanf("%s",store.name);
+                            gotoxy(24,16);
+                            printf("Enter the customer Address: ");
+                            scanf("%s",store.address);
+                            gotoxy(24,18);
+                            printf("Enter the customer Contact No.: ");
+                            scanf("%s",store.phonenumber);
+                            total=store.sellrate*quantity;
+                            gotoxy(24,20);
+                            printf("Total Pay Bill : %d",total);
+                            fclose(fp);
+
+                            gotoxy(24,22);
+                            printf("If paid then press p else press n");
+                            scanf("%s",ch);
+                            if(strcmp(ch,cn)==0)
+                            {
+                                fp=fopen("tradelist.txt","a");
+                                fprintf(fp,"%s %s %s %s nebanol %s %d %d\n",store.date,store.name,store.address,store.phonenumber,mod,quantity,total);
+                                fclose(fp);
+                                ft=fopen("temp.txt","a");
+                                fp=fopen("nebanol.txt","r");
+                                while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                                {
+                                    if(strcmp(store.name,mod)==0)
+                                    {
+                                        fprintf(ft,"%s %d %d %d\n",store.name,store.buyrate,store.sellrate,(store.quantity-quantity));
+                                    }
+                                    else
+                                    {
+                                        fprintf(ft,"%s %d %d %d\n",store.name,store.buyrate,store.sellrate,store.quantity);
+                                    }
+                                }
+                                fclose(fp);
+                                fclose(ft);
+                                remove("nebanol.txt");
+                                rename("temp.txt","nebanol.txt");
+                                system("cls");
+                                gotoxy(20,10);
+                                printf("Thank You. See you Again");
+                                getch();
+                                mainmenu();
+
+
+                            }
+                            else
+                            mainmenu();
+
+                        }
+                        else
+                            mainmenu();
+                    }
+                    else
+                    {
+                                system("cls");
+                                gotoxy(20,10);
+                                printf("Sorry this medicine is not available");
+                                getch();
+                                sellproduct();
+                    }
+                break;
+            case 3:system("cls");
+                    gotoxy(20,2);
+                    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 SECLO \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+                    gotoxy(24,4);
+                    printf("Enter the medicine name: ");
+                    scanf("%s",mod);
+                    fp=fopen("seclo.txt","r");
+                    while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                    {
+                        if(strcmp(store.name,mod)==0)
+                        {
+                            if(store.quantity==0)
+                            {
+                                system("cls");
+                                gotoxy(20,10);
+                                printf("Sorry this medicine is not available");
+                                getch();
+                                mainmenu();
+                            }
+                            test=1;
+                            gotoxy(21,6);
+                            printf("The medicine  is available Quantity is: %d ",store.quantity);
+                        }
+                    }
+                    if(test==1)
+                    {
+                        gotoxy(24,8);
+                        printf("Are you sure to sell this medicine[y/n]: ");
+                        scanf("%s",ch);
+                        if(strcmp(cm,ch)==0)
+                        {
+                            gotoxy(24,10);
+                            printf("How many medicine you need: ");
+                            scanf("%d",&quantity);
+                            while(store.quantity<=quantity)
+                            {
+                                gotoxy(24,10);
+                                printf("Please Enter the valid quantity: ");
+                                scanf("%d",&quantity);
+                            }
+                            gotoxy(24,12);
+                            printf("Enter the Sell date [dd-mm-yyyy]: ");
+                            scanf("%s",store.date);
+                            gotoxy(24,14);
+                            printf("Enter the customer name: ");
+                            scanf("%s",store.name);
+                            gotoxy(24,16);
+                            printf("Enter the customer Address: ");
+                            scanf("%s",store.address);
+                            gotoxy(24,18);
+                            printf("Enter the customer Contact No.: ");
+                            scanf("%s",store.phonenumber);
+                            total=store.sellrate*quantity;
+                            gotoxy(24,20);
+                            printf("Total Pay Bill : %d",total);
+                            fclose(fp);
+
+                            gotoxy(24,22);
+                            printf("If paid then press p else press n");
+                            scanf("%s",ch);
+                            if(strcmp(ch,cn)==0)
+                            {
+                                fp=fopen("tradelist.txt","a");
+                                fprintf(fp,"%s %s %s %s Seclo %s %d %d\n",store.date,store.name,store.address,store.phonenumber,mod,quantity,total);
+                                fclose(fp);
+                                ft=fopen("temp.txt","a");
+                                fphone=fopen("seclo.txt","r");
+                                while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                                {
+                                    if(strcmp(store.name,mod)==0)
+                                    {
+                                        fprintf(ft,"%s %d %d %d\n",store.name,store.buyrate,store.sellrate,(store.quantity-quantity));
+                                    }
+                                    else
+                                    {
+                                        fprintf(ft,"%s %d %d %d\n",store.name,store.buyrate,store.sellrate,store.quantity);
+                                    }
+                                }
+                                fclose(fp);
+                                fclose(ft);
+                                remove("seclo.txt");
+                                rename("temp.txt","seclo.txt");
+                                system("cls");
+                                gotoxy(20,10);
+                                printf("Thank You. See you Again");
+                                getch();
+                                mainmenu();
+
+
+                            }
+                            else
+                            mainmenu();
+
+                        }
+                        else
+                            mainmenu();
+                    }
+                    else
+                    {
+                                system("cls");
+                                gotoxy(20,10);
+                                printf("Sorry this medicine is not available");
+                                getch();
+                                sellproduct();
+                    }
+                break;
+            case 4:system("cls");
+                    gotoxy(20,2);
+                    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 HAMDARD \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+                    gotoxy(24,4);
+                    printf("Enter the medicine name: ");
+                    scanf("%s",mod);
+                    fphone=fopen("hamdard.txt","r");
+                    while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                    {
+                        if(strcmp(store.name,mod)==0)
+                        {
+                            if(store.quantity==0)
+                            {
+                                system("cls");
+                                gotoxy(20,10);
+                                printf("Sorry this medicine is not available");
+                                getch();
+                                mainmenu();
+                            }
+                            test=1;
+                            gotoxy(21,6);
+                            printf("The medicine is available Quantity is: %d ",store.quantity);
+                        }
+                    }
+                    if(test==1)
+                    {
+                        gotoxy(24,8);
+                        printf("Are you sure to sell this medicine[y/n]: ");
+                        scanf("%s",ch);
+                        if(strcmp(cm,ch)==0)
+                        {
+                            gotoxy(24,10);
+                            printf("How many medicine you need: ");
+                            scanf("%d",&quantity);
+                            while(store.quantity<=quantity)
+                            {
+                                gotoxy(24,10);
+                                printf("Please Enter the valid quantity: ");
+                                scanf("%d",&quantity);
+                            }
+                            gotoxy(24,12);
+                            printf("Enter the Sell date [dd-mm-yyyy]: ");
+                            scanf("%s",store.date);
+                            gotoxy(24,14);
+                            printf("Enter the customer name: ");
+                            scanf("%s",store.name);
+                            gotoxy(24,16);
+                            printf("Enter the customer Address: ");
+                            scanf("%s",store.address);
+                            gotoxy(24,18);
+                            printf("Enter the customer Contact No.: ");
+                            scanf("%s",store.phonenumber);
+                            total=store.sellrate*quantity;
+                            gotoxy(24,20);
+                            printf("Total Pay Bill : %d",total);
+                            fclose(fp);
+
+                            gotoxy(24,22);
+                            printf("If paid then press p else press n");
+                            scanf("%s",ch);
+                            if(strcmp(ch,cn)==0)
+                            {
+                                fp=fopen("tradelist.txt","a");
+                                fprintf(fp,"%s %s %s %s hamdard %s %d %d\n",store.date,store.name,store.address,store.phonenumber,mod,quantity,total);
+                                fclose(fp);
+                                ft=fopen("temp.txt","a");
+                                fp=fopen("hamdard.txt","r");
+                                while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                                {
+                                    if(strcmp(store.name,mod)==0)
+                                    {
+                                        fprintf(ft,"%s %d %d %d\n",store.name,store.buyrate,store.sellrate,(store.quantity-quantity));
+                                    }
+                                    else
+                                    {
+                                        fprintf(ft,"%s %d %d %d\n",store.name,store.buyrate,store.sellrate,store.quantity);
+                                    }
+                                }
+                                fclose(fp);
+                                fclose(ft);
+                                remove("hamdard.txt");
+                                rename("temp.txt","hamdard.txt");
+                                system("cls");
+                                gotoxy(20,10);
+                                printf("Thank You. See you Again");
+                                getch();
+                                mainmenu();
+
+
+                            }
+                            else
+                                mainmenu();
+
+                        }
+                        else
+                            mainmenu();
+                    }
+                    else
+                    {
+                                system("cls");
+                                gotoxy(20,10);
+                                printf("Sorry this medicine is not available");
+                                getch();
+                                sellproduct();
+                    }
+                break;
+            case 5:
+                mainmenu();
+                break;
+    }
+}
+
+void tradelist()
+{
+    char date[20],brand[20]; FILE *trade; int total,sellmoney=0,test=0;
+    system("cls");
+    gotoxy(20,2);
+    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 TRADE LIST \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+    gotoxy(24,4);
+    printf("Enter the date to view the trade list: ");
+    scanf("%s",date);
+    trade=fopen("tradelist.txt","r");
+    gotoxy(10,6);
+    printf("Name\tAddress\tContact No.\tBrand\t     Quantity  Total\n");
+    while(fscanf(trade,"%s %s %s %s %s %s %d",store.date,store.name,store.address,store.phonenumber,&store.quantity,&total)!=EOF)
+    {
+        if(strcmp(date,store.date)==0)
+        {
+            test=1;
+            printf("\t%s\t%s\t%s\t%s\t%d\n",store.name,store.address,store.phonenumber,store.quantity,total);
+            sellmoney=sellmoney+total;
+        }
+    }
+    fclose(trade);
+    if(test==0)
+    {
+        system("cls");
+        gotoxy(20,10);
+        printf("There is no sell in this date");
+        getch();
+        mainmenu();
+    }
+    printf("\n\t\t\t\tTotal sell Money in this Day: %d",sellmoney);
+    printf("\n\n\t\t\tPress any key to go Main Menu....");
+    getch();
+   mainmenu();
+
+}
+
+void deleteproduct()
+{
+    system("cls");
+    int a,test=0,test1=0;   char ch[2],mod[10],cm[2]="y";
+    FILE *fp,*ft;
+    gotoxy(20,2);
+    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 DELETE PRODUCT \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+    gotoxy(28,4);
+	printf("[1] NAPA");
+	gotoxy(28,6);
+	printf("[2] NEBANOL");
+	gotoxy(28,8);
+	printf("[3] SECLO");
+	gotoxy(28,10);
+	printf("[4] HAMDARD");
+	gotoxy(28,12);
+	printf("[5] Back to mainmenu");
+    gotoxy(20,14);
+    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+	gotoxy(25,16);
+	printf("Enter your choice: ");
+	scanf("%d",&a);
+	while(a<1||a>5)
+    {
+        gotoxy(25,16);
+        printf("Enter correct keyword: ");
+        scanf("%d",&a);
+    }
+    switch (a)
+    {
+            case 1:
+                    system("cls");
+                    fp=fopen("napa.txt","r");
+                    gotoxy(20,2);
+                    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 NAPA \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+                    gotoxy(22,4);
+                    printf("Enter the medicine name: ");
+                    scanf("%s",mod);
+                    while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                    {
+                        if(strcmp(store.name,mod)==0){
+                            test=1;
+                            }
+                    }
+                    fclose(fp);
+                    if(test==1)
+                    {
+                        gotoxy(22,6);
+                        printf("The %s medicine is available.",mod);
+                        gotoxy(22,8);
+                        printf("Are you want to sure to delete [y/n]:");
+                        scanf("%s",ch);
+                        if(strcmp(cm,ch)==0)
+                        {
+                            fp=fopen("napa.txt","r");
+                            ft=fopen("temp.txt","a");
+                            while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                            {
+                                if(strcmp(store.name,mod)!=0)
+                                {
+                                    fprintf(ft,"%s %d %d %d\n",store.name,store.buyrate,store.sellrate,store.quantity);
+                                }
+                            }
+                            fclose(fp);
+                            fclose(ft);
+                            remove("napa.txt");
+                            rename("temp.txt","napa.txt");
+                            test1=1;
+
+                        }
+                        else
+                            mainmenu();
+                    }
+                    else
+                    {
+                        gotoxy(8,6);
+                        printf("The %s medicine is not available.",mod);
+                        gotoxy(8,8);
+                        printf("Press any key to go Main Menu.......");
+                        getch();
+                        mainmenu();
+
+                    }
+                    if(test1==1)
+                    {
+                        system("cls");
+                        gotoxy(20,6);
+                        printf("You have successfully delete this medicine");
+                        gotoxy(22,8);
+                        printf("Are you want to delete another[y/n]: ");
+                        scanf("%s",ch);
+
+                        if(strcmp(ch,cm)==0)
+                        {
+                            viewproduct();
+                        }
+                        else
+                            mainmenu();
+
+                    }
+
+                break;
+            case 2:system("cls");
+                    fp=fopen("nebanol.txt","r");
+                    gotoxy(20,2);
+                    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 NEBANOL \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+                    gotoxy(22,4);
+                    printf("Enter the medicine name: ");
+                    scanf("%s",mod);
+                    while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                    {
+                        if(strcmp(store.name,mod)==0){
+                            test=1;
+                            }
+                    }
+                    fclose(fp);
+                    if(test==1)
+                    {
+                        gotoxy(22,6);
+                        printf("The %s medicine is available.",mod);
+                        gotoxy(22,8);
+                        printf("Are you want to sure to delete [y/n]:");
+                        scanf("%s",ch);
+                        if(strcmp(cm,ch)==0)
+                        {
+                            fp=fopen("nebanol.txt","r");
+                            ft=fopen("temp.txt","a");
+                            while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                            {
+                                if(strcmp(store.name,mod)!=0)
+                                {
+                                    fprintf(ft,"%s %d %d %d\n",store.name,store.buyrate,store.sellrate,store.quantity);
+                                }
+                            }
+                            fclose(fp);
+                            fclose(ft);
+                            remove("nebanol.txt");
+                            rename("temp.txt","nebanol.txt");
+                            test1=1;
+
+                        }
+                        else
+                        mainmenu();
+                    }
+                    else
+                    {
+                        gotoxy(8,6);
+                        printf("The %s medicine is not available.",mod);
+                        gotoxy(8,8);
+                        printf("Press any key to go Main Menu.......");
+                        getch();
+                        mainmenu();
+
+                    }
+                    if(test1==1)
+                    {
+                        system("cls");
+                        gotoxy(20,6);
+                        printf("You have successfully delete this medicine");
+                        gotoxy(22,8);
+                        printf("Are you want to delete another[y/n]: ");
+                        scanf("%s",ch);
+
+                        if(strcmp(ch,cm)==0)
+                        {
+                            viewproduct();
+                        }
+                        else
+                            mainmenu();
+
+                    }
+
+                break;
+            case 3:system("cls");
+                    fp=fopen("seclo.txt","r");
+                    gotoxy(20,2);
+                    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 SECLO \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+                    gotoxy(22,4);
+                    printf("Enter the medicine name: ");
+                    scanf("%s",mod);
+                    while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                    {
+                        if(strcmp(store.name,mod)==0){
+                            test=1;
+                            }
+                    }
+                    fclose(fp);
+                    if(test==1)
+                    {
+                        gotoxy(22,6);
+                        printf("The %s medicine is available.",mod);
+                        gotoxy(22,8);
+                        printf("Are you want to sure to delete [y/n]:");
+                        scanf("%s",ch);
+                        if(strcmp(cm,ch)==0)
+                        {
+                            fp=fopen("seclo.txt","r");
+                            ft=fopen("temp.txt","a");
+                            while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                            {
+                                if(strcmp(store.name,mod)!=0)
+                                {
+                                    fprintf(ft,"%s %d %d %d\n",store.name,store.buyrate,store.sellrate,store.quantity);
+                                }
+                            }
+
+                            fclose(fp);
+                            fclose(ft);
+                            remove("seclo.txt");
+                            rename("temp.txt","seclo.txt");
+                            test1=1;
+
+                        }
+                        else
+                            mainmenu();
+                    }
+                    else
+                    {
+                        gotoxy(8,6);
+                        printf("The %s medicine is not available.",mod);
+                        gotoxy(8,8);
+                        printf("Press any key to go Main Menu.......");
+                        getch();
+                        mainmenu();
+
+                    }
+                    if(test1==1)
+                    {
+                        system("cls");
+                        gotoxy(20,6);
+                        printf("You have successfully delete this medicine");
+                        gotoxy(22,8);
+                        printf("Are you want to delete another[y/n]: ");
+                        scanf("%s",ch);
+
+                        if(strcmp(ch,cm)==0)
+                        {
+                            viewproduct();
+                        }
+                        else
+                            mainmenu();
+
+                    }
+
+                break;
+            case 4:system("cls");
+                    fp=fopen("hamdard.txt","r");
+                    gotoxy(20,2);
+                    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 HAMDARD\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+                    gotoxy(22,4);
+                    printf("Enter the medicine name: ");
+                    scanf("%s",mod);
+                    while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                    {
+                        if(strcmp(store.name,mod)==0){
+                            test=1;
+                            }
+                    }
+                    fclose(fp);
+                    if(test==1)
+                    {
+                        gotoxy(22,6);
+                        printf("The %s medicine is available.",mod);
+                        gotoxy(22,8);
+                        printf("Are you want to sure to delete [y/n]:");
+                        scanf("%s",ch);
+                        if(strcmp(cm,ch)==0)
+                        {
+                            fp=fopen("hamdard.txt","r");
+                            ft=fopen("temp.txt","a");
+                            while(fscanf(fp,"%s %d %d %d",store.name,&store.buyrate,&store.sellrate,&store.quantity)!=EOF)
+                            {
+                                if(strcmp(store.name,mod)!=0)
+                                {
+                                    fprintf(ft,"%s %d %d %d\n",store.name,store.buyrate,store.sellrate,store.quantity);
+                                }
+                            }
+
+                            fclose(fp);
+                            fclose(ft);
+                            remove("hamdard.txt");
+                            rename("temp.txt","hamdard.txt");
+                            test1=1;
+
+                        }
+                        else
+                        mainmenu();
+                    }
+                    else
+                    {
+                        gotoxy(8,6);
+                        printf("The %s medicine is not available.",mod);
+                        gotoxy(8,8);
+                        printf("Press any key to go Main Menu.......");
+                        getch();
+                        mainmenu();
+
+                    }
+                    if(test1==1)
+                    {
+                        system("cls");
+                        gotoxy(20,6);
+                        printf("You have successfully delete this medicine");
+                        gotoxy(22,8);
+                        printf("Are you want to delete another[y/n]: ");
+                        scanf("%s",ch);
+
+                        if(strcmp(ch,cm)==0)
+                        {
+                            viewproduct();
+                        }
+                        else
+                            mainmenu();
+
+                    }
+
+                break;
+            case 5:
+                mainmenu();
+                break;
+    }
+}
+
+void exitpro()
+{
+    exit(0);
+}
+
+ mainmenu()
+{
+    system("cls");
+    char a;
+    gotoxy(20,2);
+    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2 MAIN MENU \xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+    gotoxy(28,4);
+	printf("[1] Add Product");
+	gotoxy(28,6);
+	printf("[2] View Product List");
+	gotoxy(28,8);
+	printf("[3] Update Product details");
+	gotoxy(28,10);
+	printf("[4] Sell Product");
+	gotoxy(28,12);
+	printf("[5] Trade List");
+	gotoxy(28,14);
+	printf("[6] Delete Product");
+	gotoxy(28,16);
+	printf("[7] Exit Program");
+	gotoxy(20,18);
+    printf("\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2\xB2");
+    againchance:
+    gotoxy(26,20);
+    printf("Enter your choice: ");
+    scanf("%c",&a);
+    switch(a){
+     case '1':addproduct();
+            break;
+
+     case '2':viewproduct();
+            break;
+
+     case '3':updateproduct();
+            break;
+
+     case '4':sellproduct();
+            break;
+
+     case '5':tradelist();
+            break;
+
+     case '6':deleteproduct();
+            break;
+
+     case '7':exitpro();
+            break;
+     default:gotoxy(23,23);
+                printf("Wrong Keyword. Please try again....\a");
+            goto againchance;
+    }
+}
+
+
+int main()
+{
+    password(1);
+    return 0;
+}
+
+
